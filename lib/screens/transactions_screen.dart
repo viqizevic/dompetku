@@ -1,5 +1,5 @@
+import 'package:dompetku/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
-import 'package:dompetku/widgets/transaction_tile.dart';
 
 class TransactionsScreen extends StatelessWidget {
   @override
@@ -34,21 +34,17 @@ class TransactionsScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              padding:
-                  EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 20),
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   )),
-              child: Column(
-                children: <Widget>[
-                  TransactionTile(),
-                  TransactionTile(),
-                  TransactionTile(),
-                ],
-              ),
+              child: TransactionsList(),
             ),
           )
         ],

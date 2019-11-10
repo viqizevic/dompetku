@@ -1,5 +1,9 @@
 
 TODO
+_ Add id to transaction
+
+DONE
+_ Use transaction data
 _ Bottom border line in transaction tile
 
 
