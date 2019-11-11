@@ -1,5 +1,7 @@
+import 'package:dompetku/models/transaction_data.dart';
 import 'package:dompetku/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TransactionsScreen extends StatelessWidget {
   @override
@@ -22,7 +24,7 @@ class TransactionsScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$2700,00',
+                  '\$${Provider.of<TransactionData>(context).balance.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 50,

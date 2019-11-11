@@ -12,4 +12,8 @@ class Transaction {
     this.date,
     this.category,
   });
+
+  bool get isAnExpense {
+    return amount < 0;
+  }
 }

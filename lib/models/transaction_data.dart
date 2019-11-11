@@ -5,30 +5,40 @@ import 'package:flutter/foundation.dart';
 class TransactionData extends ChangeNotifier {
   List<Transaction> _trans = [
     Transaction(
+      payee: "ATM",
+      amount: 50,
+      date: DateTime.now().add(Duration(days: -1)),
+      category: "Cash",
+    ),
+    Transaction(
       payee: "J.Co",
-      amount: 17.49,
-      date: DateTime.now(),
+      amount: -17.49,
+      date: DateTime.now().add(Duration(days: -1)),
       category: "Eating Out",
     ),
     Transaction(
       payee: "Timezone",
-      amount: 9.25,
+      amount: -9.25,
       date: DateTime.now(),
       category: "Entertainment",
     ),
     Transaction(
       payee: "Bakso Pak Jo",
-      amount: 7.4,
-      date: DateTime.now().add(Duration(days: -1)),
+      amount: -7.4,
+      date: DateTime.now(),
       category: "Eating Out",
     ),
   ];
 
   UnmodifiableListView<Transaction> get transactions {
-    return UnmodifiableListView(_trans);
+    return UnmodifiableListView(_trans.reversed);
   }
 
   int get transactionCount {
     return _trans.length;
+  }
+
+  double get balance {
+    return _trans.fold(0, (p, q) => (p + q.amount));
   }
 }

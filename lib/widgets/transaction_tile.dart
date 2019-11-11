@@ -6,12 +6,14 @@ class TransactionTile extends StatelessWidget {
   final double amount;
   final DateTime date;
   final String category;
+  final bool isAnExpense;
 
   TransactionTile({
     this.payee,
     this.amount,
     this.date,
     this.category,
+    this.isAnExpense,
   });
 
   @override
@@ -70,6 +72,7 @@ class TransactionTile extends StatelessWidget {
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w900,
+              color: isAnExpense ? Colors.red.shade800 : Colors.green,
             ),
           ),
         ),

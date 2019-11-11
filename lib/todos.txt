@@ -3,6 +3,8 @@ TODO
 _ Add id to transaction
 
 DONE
+_ Show total balance
+_ Set transaction color red if an expense
 _ Use transaction data
 _ Bottom border line in transaction tile
 

@@ -17,6 +17,7 @@ class TransactionsList extends StatelessWidget {
               amount: transaction.amount,
               date: transaction.date,
               category: transaction.category,
+              isAnExpense: transaction.isAnExpense,
             );
           },
           itemCount: transactionData.transactionCount,
