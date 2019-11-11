@@ -1,4 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
+import 'package:dompetku/screens/add_transaction_screen.dart';
 import 'package:dompetku/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,16 @@ class TransactionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent,
+        child: Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => AddTransactionScreen(),
+          );
+        },
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

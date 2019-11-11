@@ -41,4 +41,19 @@ class TransactionData extends ChangeNotifier {
   double get balance {
     return _trans.fold(0, (p, q) => (p + q.amount));
   }
+
+  void addTransaction({
+    String payee,
+    double amount,
+    String category,
+    DateTime date,
+  }) {
+    _trans.add(Transaction(
+      payee: payee,
+      amount: amount,
+      category: category,
+      date: date,
+    ));
+    notifyListeners();
+  }
 }
