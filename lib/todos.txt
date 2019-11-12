@@ -1,9 +1,9 @@
 
 TODO
-_ User can delete transaction
-_ Save transactions
+_ Show transactions from last session
 
 DONE
+_ User can delete transaction
 _ Add id to transaction
 _ User can update transaction
 _ User can add new transaction
@@ -11,6 +11,6 @@ _ Show total balance
 _ Set transaction color red if an expense
 _ Use transaction data
 _ Bottom border line in transaction tile
-
+_ Show transactions
 
 

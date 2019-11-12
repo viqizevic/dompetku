@@ -6,31 +6,31 @@ class TransactionData extends ChangeNotifier {
   List<Transaction> _trans = [
     Transaction(
       id: 1,
-      payee: "ATM",
+      payee: "BCA",
       amount: 50,
       date: DateTime.now().add(Duration(days: -1)),
       category: "Cash",
     ),
     Transaction(
-      id: 2,
-      payee: "J.Co",
-      amount: -17.49,
+      id: 3,
+      payee: "Ayam Penyet",
+      amount: -4.25,
       date: DateTime.now().add(Duration(days: -1)),
       category: "Eating Out",
     ),
     Transaction(
-      id: 3,
-      payee: "Timezone",
-      amount: -9.25,
-      date: DateTime.now(),
-      category: "Entertainment",
-    ),
-    Transaction(
       id: 4,
       payee: "Bakso Pak Jo",
-      amount: -7.4,
+      amount: -2.4,
       date: DateTime.now(),
       category: "Eating Out",
+    ),
+    Transaction(
+      id: 2,
+      payee: "Starbucks",
+      amount: -4.49,
+      date: DateTime.now(),
+      category: "Drink Out",
     ),
   ];
 
