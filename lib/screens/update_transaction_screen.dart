@@ -1,6 +1,7 @@
 import 'package:dompetku/models/transaction.dart';
 import 'package:dompetku/models/transaction_data.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -109,7 +110,7 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
               controller: amountController,
               decoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.numberWithOptions(
-                signed: false,
+                signed: true,
                 decimal: true,
               ),
               textAlign: TextAlign.center,
@@ -156,6 +157,18 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
               color: Colors.blueAccent,
               onPressed: _updateData,
             ),
+            FlatButton(
+              child: Icon(
+                FontAwesomeIcons.trash,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                Provider.of<TransactionData>(context).deleteTransaction(
+                  transaction: widget.transaction,
+                );
+                Navigator.pop(context);
+              },
+            )
           ],
         ),
       ),

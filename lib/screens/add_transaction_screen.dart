@@ -93,7 +93,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               controller: amountController,
               decoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.numberWithOptions(
-                signed: false,
+                signed: true,
                 decimal: true,
               ),
               textAlign: TextAlign.center,

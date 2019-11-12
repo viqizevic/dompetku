@@ -75,4 +75,9 @@ class TransactionData extends ChangeNotifier {
     tx.date = newDate;
     notifyListeners();
   }
+
+  void deleteTransaction({Transaction transaction}) {
+    _trans.remove(transaction);
+    notifyListeners();
+  }
 }

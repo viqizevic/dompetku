@@ -1,6 +1,7 @@
 
 TODO
 _ User can delete transaction
+_ Save transactions
 
 DONE
 _ Add id to transaction
