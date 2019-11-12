@@ -7,6 +7,7 @@ class TransactionTile extends StatelessWidget {
   final DateTime date;
   final String category;
   final bool isAnExpense;
+  final Function onTapCallback;
 
   TransactionTile({
     this.payee,
@@ -14,6 +15,7 @@ class TransactionTile extends StatelessWidget {
     this.date,
     this.category,
     this.isAnExpense,
+    this.onTapCallback,
   });
 
   @override
@@ -33,6 +35,7 @@ class TransactionTile extends StatelessWidget {
           bottom: 6,
         ),
         child: ListTile(
+          onTap: onTapCallback,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -68,7 +71,7 @@ class TransactionTile extends StatelessWidget {
             ],
           ),
           trailing: Text(
-            '\$${amount.toStringAsFixed(2)}',
+            '€${amount.abs().toStringAsFixed(2)}',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w900,

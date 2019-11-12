@@ -1,9 +1,9 @@
 class Transaction {
   final int id;
-  final String payee;
-  final double amount;
-  final DateTime date;
-  final String category;
+  String payee;
+  double amount;
+  DateTime date;
+  String category;
 
   Transaction({
     this.id,

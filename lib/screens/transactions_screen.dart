@@ -35,7 +35,7 @@ class TransactionsScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$${Provider.of<TransactionData>(context).balance.toStringAsFixed(2)}',
+                  '€${Provider.of<TransactionData>(context).balance.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 50,

@@ -1,4 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
+import 'package:dompetku/screens/update_transaction_screen.dart';
 import 'package:dompetku/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,14 @@ class TransactionsList extends StatelessWidget {
               date: transaction.date,
               category: transaction.category,
               isAnExpense: transaction.isAnExpense,
+              onTapCallback: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => UpdateTransactionScreen(
+                    transaction: transaction,
+                  ),
+                );
+              },
             );
           },
           itemCount: transactionData.transactionCount,

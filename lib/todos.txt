@@ -1,8 +1,11 @@
 
 TODO
-_ Add id to transaction
+_ User can delete transaction
 
 DONE
+_ Add id to transaction
+_ User can update transaction
+_ User can add new transaction
 _ Show total balance
 _ Set transaction color red if an expense
 _ Use transaction data
