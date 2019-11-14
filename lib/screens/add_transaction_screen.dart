@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AddTransactionScreen extends StatefulWidget {
+  static const String id = 'add';
+
   @override
   _AddTransactionScreenState createState() => _AddTransactionScreenState();
 }
@@ -62,27 +64,32 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xff757575),
-      child: Container(
+    return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ],
+        title: Text(
+          'New Transaction',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
         ),
         child: Column(
           children: <Widget>[
-            Text(
-              'New Transaction',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.blueAccent,
-              ),
-            ),
             TextField(
               controller: payeeController,
               autofocus: true,

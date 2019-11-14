@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TransactionsScreen extends StatelessWidget {
+  static const String id = 'transactions';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,10 +15,7 @@ class TransactionsScreen extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         child: Icon(Icons.add),
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => AddTransactionScreen(),
-          );
+          Navigator.pushNamed(context, AddTransactionScreen.id);
         },
       ),
       body: Column(

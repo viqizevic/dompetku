@@ -14,7 +14,7 @@ class TransactionData extends ChangeNotifier {
     Transaction(
       id: 3,
       payee: "Ayam Penyet",
-      amount: -4.25,
+      amount: -4.24,
       date: DateTime.now().add(Duration(days: -1)),
       category: "Eating Out",
     ),
@@ -28,7 +28,7 @@ class TransactionData extends ChangeNotifier {
     Transaction(
       id: 2,
       payee: "Starbucks",
-      amount: -4.49,
+      amount: -3.49,
       date: DateTime.now(),
       category: "Drink Out",
     ),

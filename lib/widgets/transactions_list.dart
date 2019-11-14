@@ -20,11 +20,13 @@ class TransactionsList extends StatelessWidget {
               category: transaction.category,
               isAnExpense: transaction.isAnExpense,
               onTapCallback: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => UpdateTransactionScreen(
-                    transaction: transaction,
-                  ),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return UpdateTransactionScreen(
+                      transaction: transaction,
+                    );
+                  }),
                 );
               },
             );
