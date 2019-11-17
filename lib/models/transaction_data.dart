@@ -1,38 +1,32 @@
 import 'dart:collection';
+import 'package:dompetku/models/database_helper.dart';
 import 'package:dompetku/models/transaction.dart';
 import 'package:flutter/foundation.dart';
 
 class TransactionData extends ChangeNotifier {
-  List<Transaction> _trans = [
-    Transaction(
-      id: 1,
-      payee: "BCA",
-      amount: 50,
-      date: DateTime.now().add(Duration(days: -1)),
-      category: "Cash",
-    ),
-    Transaction(
-      id: 3,
-      payee: "Ayam Penyet",
-      amount: -4.24,
-      date: DateTime.now().add(Duration(days: -1)),
-      category: "Eating Out",
-    ),
-    Transaction(
-      id: 4,
-      payee: "Bakso Pak Jo",
-      amount: -2.4,
-      date: DateTime.now(),
-      category: "Eating Out",
-    ),
-    Transaction(
-      id: 2,
-      payee: "Starbucks",
-      amount: -3.49,
-      date: DateTime.now(),
-      category: "Drink Out",
-    ),
-  ];
+  List<Transaction> _trans = [];
+  int newIdCounter = 1;
+
+  TransactionData() {
+    readData();
+  }
+
+  void readData() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+    int rowId = 1;
+    Transaction tx = await helper.queryTransaction(rowId);
+    if (null == tx) {
+      addTransaction(
+          payee: "Bank A", amount: 50, category: "Cash", date: DateTime.now());
+      addTransaction(
+          payee: "Resto B",
+          amount: -10,
+          category: "Eating Out",
+          date: DateTime.now());
+    } else {
+      _trans.add(tx);
+    }
+  }
 
   UnmodifiableListView<Transaction> get transactions {
     return UnmodifiableListView(_trans.reversed);
@@ -51,13 +45,18 @@ class TransactionData extends ChangeNotifier {
     double amount,
     String category,
     DateTime date,
-  }) {
-    _trans.add(Transaction(
+  }) async {
+    Transaction tx = Transaction(
+      id: newIdCounter,
       payee: payee,
       amount: amount,
       category: category,
       date: date,
-    ));
+    );
+    newIdCounter++;
+    _trans.add(tx);
+    DatabaseHelper helper = DatabaseHelper.instance;
+    await helper.insert(tx);
     notifyListeners();
   }
 
