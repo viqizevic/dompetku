@@ -83,71 +83,73 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: payeeController,
-              autofocus: true,
-              decoration: InputDecoration(labelText: 'Payee'),
-              textAlign: TextAlign.center,
-            ),
-            TextField(
-              controller: amountController,
-              decoration: InputDecoration(labelText: 'Amount'),
-              keyboardType: TextInputType.numberWithOptions(
-                signed: true,
-                decimal: true,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Column(
+            children: <Widget>[
+              TextField(
+                controller: payeeController,
+                autofocus: true,
+                decoration: InputDecoration(labelText: 'Payee'),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            TextField(
-              controller: categoryController,
-              decoration: InputDecoration(labelText: 'Category'),
-              textAlign: TextAlign.center,
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
+              TextField(
+                controller: amountController,
+                decoration: InputDecoration(labelText: 'Amount'),
+                keyboardType: TextInputType.numberWithOptions(
+                  signed: true,
+                  decimal: true,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              TextField(
+                controller: categoryController,
+                decoration: InputDecoration(labelText: 'Category'),
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(
+                            'Date: ${DateFormat.MMMEd().format(_selectedDate)}')),
+                    FlatButton(
                       child: Text(
-                          'Date: ${DateFormat.MMMEd().format(_selectedDate)}')),
-                  FlatButton(
-                    child: Text(
-                      'Choose new date',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                        'Choose new date',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                      onPressed: _showDatePicker,
                     ),
-                    onPressed: _showDatePicker,
+                  ],
+                ),
+              ),
+              Visibility(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Please enter Title and Amount.',
+                    style: TextStyle(color: Colors.red),
                   ),
-                ],
+                ),
+                visible: _inputIsInvalid,
               ),
-            ),
-            Visibility(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
+              FlatButton(
                 child: Text(
-                  'Please enter Title and Amount.',
-                  style: TextStyle(color: Colors.red),
+                  'Add',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
+                color: Colors.blueAccent,
+                onPressed: _submitData,
               ),
-              visible: _inputIsInvalid,
-            ),
-            FlatButton(
-              child: Text(
-                'Add',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              color: Colors.blueAccent,
-              onPressed: _submitData,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
