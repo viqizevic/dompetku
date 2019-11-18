@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 import 'package:dompetku/models/database_helper.dart';
 import 'package:dompetku/models/transaction.dart';
 import 'package:flutter/foundation.dart';
@@ -6,16 +7,16 @@ import 'package:flutter/foundation.dart';
 class TransactionData extends ChangeNotifier {
   List<Transaction> _trans = [];
   int newIdCounter = 1;
+  DatabaseHelper dbHelper;
 
   TransactionData() {
+    dbHelper = DatabaseHelper.instance;
     readData();
   }
 
   void readData() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    int rowId = 1;
-    Transaction tx = await helper.queryTransaction(rowId);
-    if (null == tx) {
+    List<Transaction> list = await dbHelper.queryAllTransactions();
+    if (null == list || list.isEmpty) {
       addTransaction(
           payee: "Bank A", amount: 50, category: "Cash", date: DateTime.now());
       addTransaction(
@@ -24,7 +25,8 @@ class TransactionData extends ChangeNotifier {
           category: "Eating Out",
           date: DateTime.now());
     } else {
-      _trans.add(tx);
+      _trans.addAll(list);
+      newIdCounter = list.fold(0, (p, q) => (max<int>(p, q.id))) + 1;
     }
   }
 
@@ -55,8 +57,7 @@ class TransactionData extends ChangeNotifier {
     );
     newIdCounter++;
     _trans.add(tx);
-    DatabaseHelper helper = DatabaseHelper.instance;
-    await helper.insert(tx);
+    await dbHelper.insert(tx);
     notifyListeners();
   }
 
@@ -66,17 +67,25 @@ class TransactionData extends ChangeNotifier {
     double newAmount,
     String newCategory,
     DateTime newDate,
-  }) {
+  }) async {
     Transaction tx = _trans.firstWhere((tr) => (tr.id == transactionId));
     tx.payee = newPayee;
     tx.amount = newAmount;
     tx.category = newCategory;
     tx.date = newDate;
+    await dbHelper.updateTransaction(
+      id: transactionId,
+      payee: newPayee,
+      amount: newAmount,
+      category: newCategory,
+      date: newDate,
+    );
     notifyListeners();
   }
 
-  void deleteTransaction({Transaction transaction}) {
+  void deleteTransaction({Transaction transaction}) async {
     _trans.remove(transaction);
+    await dbHelper.deleteTransaction(transaction.id);
     notifyListeners();
   }
 }

@@ -89,7 +89,7 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
               }),
         ],
         title: Text(
-          'Update Transaction',
+          'Update Transaction (id:${widget.transaction.id})',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20.0,

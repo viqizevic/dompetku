@@ -98,7 +98,37 @@ class DatabaseHelper {
     return null;
   }
 
-// TODO: queryAllWords()
-// TODO: delete(int id)
-// TODO: update(Word word)
+  Future<List<tx.Transaction>> queryAllTransactions() async {
+    Database db = await database;
+    List<Map> maps = await db.rawQuery('SELECT * FROM $tableTrans');
+    return maps.map((m) => fromMap(m)).toList();
+  }
+
+  Future<int> deleteTransaction(int id) async {
+    Database db = await database;
+    int count =
+        await db.delete(tableTrans, where: '$columnId = ?', whereArgs: [id]);
+    return count;
+  }
+
+  Future<int> updateTransaction(
+      {int id,
+      String payee,
+      double amount,
+      String category,
+      DateTime date}) async {
+    Database db = await database;
+    int count = await db.update(
+      tableTrans,
+      <String, dynamic>{
+        columnPayee: payee,
+        columnAmount: amount,
+        columnDate: date.millisecondsSinceEpoch,
+        columnCategory: category,
+      },
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
+    return count;
+  }
 }
