@@ -18,9 +18,12 @@ class TransactionData extends ChangeNotifier {
     List<Transaction> list = await dbHelper.queryAllTransactions();
     if (null == list || list.isEmpty) {
       addTransaction(
-          payee: "Bank A", amount: 50, category: "Cash", date: DateTime.now());
+          payee: "Bank 1",
+          amount: 50,
+          category: "Cash",
+          date: DateTime.now().subtract(Duration(days: 1)));
       addTransaction(
-          payee: "Resto B",
+          payee: "Restaurant 2",
           amount: -10,
           category: "Eating Out",
           date: DateTime.now());

@@ -10,7 +10,9 @@ class DatabaseHelper {
   static const String columnPayee = 'payee';
   static const String columnAmount = 'amount';
   static const String columnDate = 'date';
+  static const String columnAccount = 'account';
   static const String columnCategory = 'category';
+  static const String columnNote = 'note';
 
   static final String _databaseName = "dompetku.db";
 
@@ -25,6 +27,7 @@ class DatabaseHelper {
       columnPayee: trans.payee,
       columnAmount: trans.amount,
       columnDate: trans.date.millisecondsSinceEpoch,
+      columnAccount: 'Wallet',
       columnCategory: trans.category
     };
     if (null != trans.id) {
@@ -54,6 +57,9 @@ class DatabaseHelper {
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
+
+    // If needed to delete: await deleteDatabase(path);
+
     // Open the database. Can also add an onUpdate callback parameter.
     return await openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
@@ -67,7 +73,9 @@ class DatabaseHelper {
                 $columnPayee TEXT NOT NULL,
                 $columnAmount REAL NOT NULL,
                 $columnDate INTEGER NOT NULL,
-                $columnCategory TEXT
+                $columnAccount TEXT,
+                $columnCategory TEXT,
+                $columnNote TEXT
               )
               ''');
   }
