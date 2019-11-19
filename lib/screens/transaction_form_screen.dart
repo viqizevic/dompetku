@@ -5,32 +5,38 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class UpdateTransactionScreen extends StatefulWidget {
+class TransactionFormScreen extends StatefulWidget {
+  static const String addId = 'add';
+
   final Transaction transaction;
 
-  UpdateTransactionScreen({this.transaction});
+  TransactionFormScreen({this.transaction});
 
   @override
-  _UpdateTransactionScreenState createState() =>
-      _UpdateTransactionScreenState();
+  _TransactionFormScreenState createState() => _TransactionFormScreenState();
 }
 
-class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
+class _TransactionFormScreenState extends State<TransactionFormScreen> {
   final payeeController = TextEditingController();
   final amountController = TextEditingController();
   final categoryController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   bool _isAnExpense = true;
-  bool _inputIsInvalid = false;
+  bool _inputIsValid = true;
+  bool _shouldUpdateTransaction = false;
 
   @override
   void initState() {
     super.initState();
-    _isAnExpense = widget.transaction.isAnExpense;
-    payeeController.text = widget.transaction.payee;
-    amountController.text = widget.transaction.amount.abs().toStringAsFixed(2);
-    categoryController.text = widget.transaction.category;
-    _selectedDate = widget.transaction.date;
+    if (null != widget.transaction) {
+      _shouldUpdateTransaction = true;
+      _isAnExpense = widget.transaction.isAnExpense;
+      payeeController.text = widget.transaction.payee;
+      amountController.text =
+          widget.transaction.amount.abs().toStringAsFixed(2);
+      categoryController.text = widget.transaction.category;
+      _selectedDate = widget.transaction.date;
+    }
   }
 
   void _toggleType() {
@@ -39,7 +45,7 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
     });
   }
 
-  void _updateData() {
+  void _submitData() {
     String enteredPayee = payeeController.text;
     double enteredAmount = 0;
     if (amountController.text.isNotEmpty) {
@@ -56,18 +62,27 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
 
     if (enteredPayee.isEmpty || amountController.text.isEmpty) {
       setState(() {
-        _inputIsInvalid = true;
+        _inputIsValid = false;
       });
       return;
     }
 
-    Provider.of<TransactionData>(context).updateTransaction(
-      transactionId: widget.transaction.id,
-      newPayee: enteredPayee,
-      newAmount: enteredAmount,
-      newCategory: enteredCategory,
-      newDate: _selectedDate,
-    );
+    if (_shouldUpdateTransaction) {
+      Provider.of<TransactionData>(context).updateTransaction(
+        transactionId: widget.transaction.id,
+        newPayee: enteredPayee,
+        newAmount: enteredAmount,
+        newCategory: enteredCategory,
+        newDate: _selectedDate,
+      );
+    } else {
+      Provider.of<TransactionData>(context).addTransaction(
+        payee: enteredPayee,
+        amount: enteredAmount,
+        category: enteredCategory,
+        date: _selectedDate,
+      );
+    }
 
     Navigator.pop(context);
   }
@@ -100,7 +115,9 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
               }),
         ],
         title: Text(
-          'Update Transaction (id:${widget.transaction.id})',
+          _shouldUpdateTransaction
+              ? 'Update Transaction (id:${widget.transaction.id})'
+              : 'New Transaction',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20.0,
@@ -154,7 +171,7 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
                 controller: amountController,
                 decoration: InputDecoration(labelText: 'Amount'),
                 keyboardType: TextInputType.numberWithOptions(
-                  signed: true,
+                  signed: false,
                   decimal: true,
                 ),
                 textAlign: TextAlign.center,
@@ -195,33 +212,38 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
-                visible: _inputIsInvalid,
+                visible: !_inputIsValid,
               ),
               FlatButton(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    'Update',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    _shouldUpdateTransaction ? 'Update' : 'Add',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
                 color: Colors.blueAccent,
-                onPressed: _updateData,
+                onPressed: _submitData,
               ),
-              FlatButton(
-                child: Icon(
-                  FontAwesomeIcons.trash,
-                  color: Colors.grey,
+              Visibility(
+                child: FlatButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Icon(
+                      FontAwesomeIcons.trash,
+                      color: Colors.grey,
+                      size: 32,
+                    ),
+                  ),
+                  onPressed: () {
+                    Provider.of<TransactionData>(context).deleteTransaction(
+                      transaction: widget.transaction,
+                    );
+                    Navigator.pop(context);
+                  },
                 ),
-                onPressed: () {
-                  Provider.of<TransactionData>(context).deleteTransaction(
-                    transaction: widget.transaction,
-                  );
-                  Navigator.pop(context);
-                },
-              )
+                visible: _shouldUpdateTransaction,
+              ),
             ],
           ),
         ),

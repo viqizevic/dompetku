@@ -1,5 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
-import 'package:dompetku/screens/add_transaction_screen.dart';
+import 'package:dompetku/screens/transaction_form_screen.dart';
 import 'package:dompetku/screens/transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         initialRoute: TransactionsScreen.id,
         routes: {
           TransactionsScreen.id: (context) => TransactionsScreen(),
-          AddTransactionScreen.id: (context) => AddTransactionScreen(),
+          TransactionFormScreen.addId: (context) => TransactionFormScreen(),
         },
       ),
     );

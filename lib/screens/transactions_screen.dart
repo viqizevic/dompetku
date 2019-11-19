@@ -1,5 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
-import 'package:dompetku/screens/add_transaction_screen.dart';
+import 'package:dompetku/screens/transaction_form_screen.dart';
 import 'package:dompetku/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class TransactionsScreen extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, AddTransactionScreen.id);
+          Navigator.pushNamed(context, TransactionFormScreen.addId);
         },
       ),
       body: Column(

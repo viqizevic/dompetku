@@ -1,5 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
-import 'package:dompetku/screens/update_transaction_screen.dart';
+import 'package:dompetku/screens/transaction_form_screen.dart';
 import 'package:dompetku/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class TransactionsList extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return UpdateTransactionScreen(
+                    return TransactionFormScreen(
                       transaction: transaction,
                     );
                   }),
