@@ -20,23 +20,34 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
   final amountController = TextEditingController();
   final categoryController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+  bool _isAnExpense = true;
   bool _inputIsInvalid = false;
 
   @override
   void initState() {
     super.initState();
+    _isAnExpense = widget.transaction.isAnExpense;
     payeeController.text = widget.transaction.payee;
-    amountController.text = widget.transaction.amount.toStringAsFixed(2);
+    amountController.text = widget.transaction.amount.abs().toStringAsFixed(2);
     categoryController.text = widget.transaction.category;
     _selectedDate = widget.transaction.date;
+  }
+
+  void _toggleType() {
+    setState(() {
+      _isAnExpense = !_isAnExpense;
+    });
   }
 
   void _updateData() {
     String enteredPayee = payeeController.text;
     double enteredAmount = 0;
     if (amountController.text.isNotEmpty) {
-      enteredAmount = double.parse(amountController.text);
+      enteredAmount = double.parse(amountController.text).abs();
       enteredAmount = double.parse(enteredAmount.toStringAsFixed(2));
+      if (_isAnExpense) {
+        enteredAmount = -1 * enteredAmount;
+      }
     }
     String enteredCategory = categoryController.text;
     if (enteredCategory.isEmpty) {
@@ -106,6 +117,33 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
           ),
           child: Column(
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'Expense',
+                      style: TextStyle(
+                        color: _isAnExpense ? Colors.redAccent : Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onPressed: _toggleType,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Income',
+                      style: TextStyle(
+                        color: !_isAnExpense ? Colors.green : Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onPressed: _toggleType,
+                  ),
+                ],
+              ),
               TextField(
                 controller: payeeController,
                 autofocus: true,
@@ -132,11 +170,17 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
                   children: <Widget>[
                     Expanded(
                         child: Text(
-                            'Date: ${DateFormat.MMMEd().format(_selectedDate)}')),
+                      'Date: ${DateFormat.MMMEd().format(_selectedDate)}',
+                      style: TextStyle(fontSize: 18),
+                    )),
                     FlatButton(
                       child: Text(
                         'Choose new date',
-                        style: TextStyle(fontStyle: FontStyle.italic),
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                        ),
                       ),
                       onPressed: _showDatePicker,
                     ),
@@ -154,10 +198,13 @@ class _UpdateTransactionScreenState extends State<UpdateTransactionScreen> {
                 visible: _inputIsInvalid,
               ),
               FlatButton(
-                child: Text(
-                  'Update',
-                  style: TextStyle(
-                    color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Update',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 color: Colors.blueAccent,

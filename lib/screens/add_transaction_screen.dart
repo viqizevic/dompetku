@@ -15,14 +15,24 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   final amountController = TextEditingController();
   final categoryController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+  bool _isAnExpense = true;
   bool _inputIsInvalid = false;
+
+  void _toggleType() {
+    setState(() {
+      _isAnExpense = !_isAnExpense;
+    });
+  }
 
   void _submitData() {
     String enteredPayee = payeeController.text;
     double enteredAmount = 0;
     if (amountController.text.isNotEmpty) {
-      enteredAmount = double.parse(amountController.text);
+      enteredAmount = double.parse(amountController.text).abs();
       enteredAmount = double.parse(enteredAmount.toStringAsFixed(2));
+      if (_isAnExpense) {
+        enteredAmount = -1 * enteredAmount;
+      }
     }
     String enteredCategory = categoryController.text;
     if (enteredCategory.isEmpty) {
@@ -91,6 +101,33 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           ),
           child: Column(
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'Expense',
+                      style: TextStyle(
+                        color: _isAnExpense ? Colors.redAccent : Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onPressed: _toggleType,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Income',
+                      style: TextStyle(
+                        color: !_isAnExpense ? Colors.green : Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onPressed: _toggleType,
+                  ),
+                ],
+              ),
               TextField(
                 controller: payeeController,
                 autofocus: true,
@@ -101,7 +138,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 controller: amountController,
                 decoration: InputDecoration(labelText: 'Amount'),
                 keyboardType: TextInputType.numberWithOptions(
-                  signed: true,
+                  signed: false,
                   decimal: true,
                 ),
                 textAlign: TextAlign.center,
@@ -117,11 +154,17 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   children: <Widget>[
                     Expanded(
                         child: Text(
-                            'Date: ${DateFormat.MMMEd().format(_selectedDate)}')),
+                      'Date: ${DateFormat.MMMEd().format(_selectedDate)}',
+                      style: TextStyle(fontSize: 18),
+                    )),
                     FlatButton(
                       child: Text(
                         'Choose new date',
-                        style: TextStyle(fontStyle: FontStyle.italic),
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                        ),
                       ),
                       onPressed: _showDatePicker,
                     ),
@@ -139,10 +182,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 visible: _inputIsInvalid,
               ),
               FlatButton(
-                child: Text(
-                  'Add',
-                  style: TextStyle(
-                    color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
                 color: Colors.blueAccent,

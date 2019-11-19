@@ -1,8 +1,8 @@
 
 TODO
-_ User can select between Expense and Income per buttons
 
 DONE
+_ User can select between Expense and Income per buttons
 _ Show transactions from last session
 _ Show add form in a new screen
 _ User can delete transaction
