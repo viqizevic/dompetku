@@ -8,6 +8,7 @@ class TransactionTile extends StatelessWidget {
   final String category;
   final bool isAnExpense;
   final Function onTapCallback;
+  final bool isLastTile;
 
   TransactionTile({
     this.payee,
@@ -16,18 +17,21 @@ class TransactionTile extends StatelessWidget {
     this.category,
     this.isAnExpense,
     this.onTapCallback,
+    this.isLastTile,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: Colors.grey.shade400,
-          ),
-        ),
+        border: isLastTile
+            ? null
+            : Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Colors.grey.shade300,
+                ),
+              ),
       ),
       child: Padding(
         padding: const EdgeInsets.only(

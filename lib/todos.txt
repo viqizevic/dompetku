@@ -1,7 +1,12 @@
 
 TODO
+_ Show report by categories
+_ Add bar chart of weekly overview
+_ Give suggestion of categories
+_ Give suggestion of payees
 
 DONE
+_ Sort transactions by date
 _ User can select between Expense and Income per buttons
 _ Show transactions from last session
 _ Show add form in a new screen

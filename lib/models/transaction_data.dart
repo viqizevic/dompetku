@@ -34,6 +34,7 @@ class TransactionData extends ChangeNotifier {
   }
 
   UnmodifiableListView<Transaction> get transactions {
+    _trans.sort((a, b) => a.date.difference(b.date).inDays);
     return UnmodifiableListView(_trans.reversed);
   }
 

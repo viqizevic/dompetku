@@ -9,6 +9,7 @@ class TransactionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TransactionData>(
       builder: (context, transactionData, child) {
+        int nCount = transactionData.transactionCount;
         return ListView.builder(
           padding: EdgeInsets.only(top: 10),
           itemBuilder: (context, index) {
@@ -29,9 +30,10 @@ class TransactionsList extends StatelessWidget {
                   }),
                 );
               },
+              isLastTile: (index + 1 == nCount),
             );
           },
-          itemCount: transactionData.transactionCount,
+          itemCount: nCount,
         );
       },
     );
