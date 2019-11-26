@@ -38,6 +38,12 @@ class TransactionData extends ChangeNotifier {
     return UnmodifiableListView(_trans.reversed);
   }
 
+  UnmodifiableListView<Transaction> get recentTransactions {
+    return UnmodifiableListView(_trans.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }));
+  }
+
   int get transactionCount {
     return _trans.length;
   }

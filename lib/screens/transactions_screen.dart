@@ -1,5 +1,6 @@
 import 'package:dompetku/models/transaction_data.dart';
 import 'package:dompetku/screens/transaction_form_screen.dart';
+import 'package:dompetku/widgets/chart.dart';
 import 'package:dompetku/widgets/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class TransactionsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 80, left: 40, right: 40, bottom: 40),
+            padding: EdgeInsets.only(top: 80, left: 40, right: 40, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -40,6 +41,13 @@ class TransactionsScreen extends StatelessWidget {
                     fontSize: 50,
                     fontWeight: FontWeight.w700,
                   ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Chart(
+                  recentTransactions:
+                      Provider.of<TransactionData>(context).recentTransactions,
                 ),
               ],
             ),
