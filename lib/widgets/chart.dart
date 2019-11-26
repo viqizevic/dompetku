@@ -13,20 +13,26 @@ class Chart extends StatelessWidget {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       final String formattedWeekDay = DateFormat.MMMEd().format(weekDay);
-      double totalSum = recentTransactions.where((tx) {
-        return tx.isAnExpense &&
-            DateFormat.MMMEd().format(tx.date) == formattedWeekDay;
-      }).fold(0, (p, tx) => p + tx.amount.abs());
+      double totalIncome = 0.0;
+      double totalExpense = recentTransactions.where((tx) {
+        return DateFormat.MMMEd().format(tx.date) == formattedWeekDay;
+      }).fold(0, (p, tx) {
+        if (!tx.isAnExpense) {
+          totalIncome += tx.amount;
+        }
+        return p + (tx.isAnExpense ? tx.amount.abs() : 0.0);
+      });
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
-        'expense': totalSum,
+        'expense': totalExpense,
+        'income': totalIncome,
       };
     }).reversed.toList();
   }
 
-  double get maxExpense {
+  double get maxExpenseOrIncome {
     return groupedTransactionValues.fold(0, (sum, item) {
-      return max(sum, item['expense']);
+      return max(sum, max(item['expense'], item['income']));
     });
   }
 
@@ -38,8 +44,12 @@ class Chart extends StatelessWidget {
         return Flexible(
           child: ChartBar(
             label: data['day'],
-            expensePercentage:
-                0.0 == maxExpense ? 0.0 : data['expense'] / maxExpense,
+            expensePercentage: 0.0 == maxExpenseOrIncome
+                ? 0.0
+                : data['expense'] / maxExpenseOrIncome,
+            incomePercentage: 0.0 == maxExpenseOrIncome
+                ? 0.0
+                : data['income'] / maxExpenseOrIncome,
           ),
         );
       }).toList(),
