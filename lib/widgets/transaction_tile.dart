@@ -43,12 +43,14 @@ class TransactionTile extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                payee,
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
+              FittedBox(
+                child: Text(
+                  payee,
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               Text(

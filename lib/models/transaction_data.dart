@@ -52,6 +52,32 @@ class TransactionData extends ChangeNotifier {
     return _trans.fold(0, (p, q) => (p + q.amount));
   }
 
+  Set<String> previousPayees(
+      {String input, bool forExpense, String payeeToBeExcluded}) {
+    return input.isNotEmpty
+        ? _trans
+            .where((tx) =>
+                tx.payee.toLowerCase().startsWith(input.toLowerCase()) &&
+                tx.payee != payeeToBeExcluded &&
+                tx.isAnExpense == forExpense)
+            .map((tx) => tx.payee)
+            .toSet()
+        : Set<String>();
+  }
+
+  Set<String> suggestedCategories(
+      {String input, bool forExpense, String categoryToBeExcluded}) {
+    return input.isNotEmpty
+        ? _trans
+            .where((tx) =>
+                tx.category.toLowerCase().startsWith(input.toLowerCase()) &&
+                tx.category != categoryToBeExcluded &&
+                tx.isAnExpense == forExpense)
+            .map((tx) => tx.category)
+            .toSet()
+        : Set<String>();
+  }
+
   void addTransaction({
     String payee,
     double amount,

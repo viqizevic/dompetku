@@ -1,5 +1,6 @@
 import 'package:dompetku/models/transaction.dart';
 import 'package:dompetku/models/transaction_data.dart';
+import 'package:dompetku/widgets/suggestions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +25,8 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
   bool _isAnExpense = true;
   bool _inputIsValid = true;
   bool _shouldUpdateTransaction = false;
+  Set<String> _usedCategories = Set<String>();
+  Set<String> _previousPayees = Set<String>();
 
   @override
   void initState() {
@@ -42,6 +45,37 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
   void _toggleType() {
     setState(() {
       _isAnExpense = !_isAnExpense;
+    });
+    if (_previousPayees.isNotEmpty) {
+      _displayPreviousPayees(payeeController.text);
+    }
+    if (_usedCategories.isNotEmpty) {
+      _displaySuggestedCategories(categoryController.text);
+    }
+  }
+
+  void _displayPreviousPayees(String input) {
+    setState(() {
+      _previousPayees = Provider.of<TransactionData>(context).previousPayees(
+        input: input,
+        forExpense: _isAnExpense,
+        payeeToBeExcluded: _shouldUpdateTransaction && 1 < input.length
+            ? widget.transaction.payee
+            : null,
+      );
+    });
+  }
+
+  void _displaySuggestedCategories(String input) {
+    setState(() {
+      _usedCategories =
+          Provider.of<TransactionData>(context).suggestedCategories(
+        input: input,
+        forExpense: _isAnExpense,
+        categoryToBeExcluded: _shouldUpdateTransaction && 1 < input.length
+            ? widget.transaction.category
+            : null,
+      );
     });
   }
 
@@ -166,6 +200,15 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 autofocus: true,
                 decoration: InputDecoration(labelText: 'Payee'),
                 textAlign: TextAlign.center,
+                onChanged: _displayPreviousPayees,
+              ),
+              SuggestionsList(
+                suggestions: _previousPayees,
+                applySuggestionCallback: (String selectedPayee) {
+                  setState(() {
+                    payeeController.text = selectedPayee;
+                  });
+                },
               ),
               TextField(
                 controller: amountController,
@@ -180,6 +223,15 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 controller: categoryController,
                 decoration: InputDecoration(labelText: 'Category'),
                 textAlign: TextAlign.center,
+                onChanged: _displaySuggestedCategories,
+              ),
+              SuggestionsList(
+                suggestions: _usedCategories,
+                applySuggestionCallback: (String chosenCategory) {
+                  setState(() {
+                    categoryController.text = chosenCategory;
+                  });
+                },
               ),
               Container(
                 height: 70,
