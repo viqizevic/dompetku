@@ -1,8 +1,11 @@
 
 TODO
 _ Show report by categories
+_ Show loading icon at start
+_ Add confirmation alert before removing transaction
 
 DONE
+_ Fill category for selected payee
 _ Give suggestion of categories
 _ Give suggestion of payees
 _ Add bar chart of weekly overview

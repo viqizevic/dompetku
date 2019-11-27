@@ -78,6 +78,13 @@ class TransactionData extends ChangeNotifier {
         : Set<String>();
   }
 
+  String getMatchingCategory({String payee, bool forExpense}) {
+    Transaction matchingTransaction = _trans.firstWhere(
+        (tx) => tx.payee == payee && tx.isAnExpense == forExpense,
+        orElse: () => null);
+    return null != matchingTransaction ? matchingTransaction.category : null;
+  }
+
   void addTransaction({
     String payee,
     double amount,

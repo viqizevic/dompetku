@@ -90,9 +90,6 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
       }
     }
     String enteredCategory = categoryController.text;
-    if (enteredCategory.isEmpty) {
-      enteredCategory = widget.transaction.category;
-    }
 
     if (enteredPayee.isEmpty || amountController.text.isEmpty) {
       setState(() {
@@ -102,6 +99,10 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
     }
 
     if (_shouldUpdateTransaction) {
+      if (enteredCategory.isEmpty) {
+        enteredCategory = widget.transaction.category;
+      }
+
       Provider.of<TransactionData>(context).updateTransaction(
         transactionId: widget.transaction.id,
         newPayee: enteredPayee,
@@ -207,6 +208,19 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 applySuggestionCallback: (String selectedPayee) {
                   setState(() {
                     payeeController.text = selectedPayee;
+                    // Clear suggestions
+                    _previousPayees.clear();
+                    // Put in matching category
+                    String matchingCategory =
+                        Provider.of<TransactionData>(context)
+                            .getMatchingCategory(
+                                payee: selectedPayee, forExpense: _isAnExpense);
+                    if (null != matchingCategory &&
+                        matchingCategory.isNotEmpty) {
+                      categoryController.text = matchingCategory;
+                    } else {
+                      categoryController.text = '';
+                    }
                   });
                 },
               ),
@@ -230,6 +244,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 applySuggestionCallback: (String chosenCategory) {
                   setState(() {
                     categoryController.text = chosenCategory;
+                    _usedCategories.clear();
                   });
                 },
               ),
@@ -260,7 +275,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Please enter Title and Amount.',
+                    'Payee and Amount are required.',
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
