@@ -23,7 +23,7 @@ class TransactionsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 80, left: 40, right: 40, bottom: 20),
+            padding: EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -38,7 +38,7 @@ class TransactionsScreen extends StatelessWidget {
                   '€${Provider.of<TransactionData>(context).balance.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 50,
+                    fontSize: 40,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

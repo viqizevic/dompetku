@@ -1,7 +1,7 @@
 
 TODO
 _ Show report by categories
-_ Show loading icon at start
+_ Show loading icon at beginning of the App start
 _ Add confirmation alert before removing transaction
 
 DONE
