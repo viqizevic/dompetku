@@ -22,23 +22,9 @@ class TransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: isLastTile
-            ? null
-            : Border(
-                bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                ),
-              ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 12,
-          bottom: 6,
-        ),
-        child: ListTile(
+    return Column(
+      children: <Widget>[
+        ListTile(
           onTap: onTapCallback,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +71,11 @@ class TransactionTile extends StatelessWidget {
             ),
           ),
         ),
-      ),
+        Visibility(
+          child: Divider(),
+          visible: !isLastTile,
+        ),
+      ],
     );
   }
 }

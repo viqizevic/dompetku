@@ -10,30 +10,33 @@ class TransactionsList extends StatelessWidget {
     return Consumer<TransactionData>(
       builder: (context, transactionData, child) {
         int nCount = transactionData.transactionCount;
-        return ListView.builder(
-          padding: EdgeInsets.only(top: 10),
-          itemBuilder: (context, index) {
-            final transaction = transactionData.transactions[index];
-            return TransactionTile(
-              payee: transaction.payee,
-              amount: transaction.amount,
-              date: transaction.date,
-              category: transaction.category,
-              isAnExpense: transaction.isAnExpense,
-              onTapCallback: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return TransactionFormScreen(
-                      transaction: transaction,
-                    );
-                  }),
-                );
-              },
-              isLastTile: (index + 1 == nCount),
-            );
-          },
-          itemCount: nCount,
+        return Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            padding: EdgeInsets.only(top: 10),
+            itemBuilder: (context, index) {
+              final transaction = transactionData.transactions[index];
+              return TransactionTile(
+                payee: transaction.payee,
+                amount: transaction.amount,
+                date: transaction.date,
+                category: transaction.category,
+                isAnExpense: transaction.isAnExpense,
+                onTapCallback: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return TransactionFormScreen(
+                        transaction: transaction,
+                      );
+                    }),
+                  );
+                },
+                isLastTile: (index + 1 == nCount),
+              );
+            },
+            itemCount: nCount,
+          ),
         );
       },
     );

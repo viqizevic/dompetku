@@ -150,9 +150,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
               }),
         ],
         title: Text(
-          _shouldUpdateTransaction
-              ? 'Update Transaction (id:${widget.transaction.id})'
-              : 'New Transaction',
+          _shouldUpdateTransaction ? 'Update Transaction' : 'New Transaction',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20.0,
