@@ -44,6 +44,10 @@ class TransactionData extends ChangeNotifier {
     }));
   }
 
+  List<String> get categories {
+    return _trans.map((tx) => tx.category).toSet().toList();
+  }
+
   int get transactionCount {
     return _trans.length;
   }

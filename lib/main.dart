@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: Colors.blueAccent,
-          accentColor: Colors.yellowAccent,
+          accentColor: Colors.deepPurpleAccent,
           canvasColor: Colors.white,
         ),
         initialRoute: TabsScreen.id,
