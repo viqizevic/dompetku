@@ -9,14 +9,16 @@ class CategoriesScreen extends StatelessWidget {
     return Consumer<TransactionData>(
       builder: (context, transactionData, child) {
         List<String> cats = transactionData.categories;
-        cats.sort();
         int nCount = cats.length;
         return Padding(
           padding: const EdgeInsets.only(top: 10),
           child: ListView.builder(
             itemBuilder: (context, index) {
+              double sum = transactionData.getSumOfTransactions(
+                  transactionData.getTransactionsByCategory(cats[index]));
               return CategoryTile(
                 name: cats[index],
+                sum: sum,
                 isLastTile: (index + 1 == nCount),
               );
             },

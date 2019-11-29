@@ -45,7 +45,17 @@ class TransactionData extends ChangeNotifier {
   }
 
   List<String> get categories {
-    return _trans.map((tx) => tx.category).toSet().toList();
+    // Sort by Income or Expense
+    var cats = _trans
+        .map((tx) {
+          String prefix = tx.isAnExpense ? '2' : '1';
+          return prefix + tx.category;
+        })
+        .toSet()
+        .toList();
+    cats.sort();
+    cats = cats.map((category) => category.substring(1)).toSet().toList();
+    return cats;
   }
 
   int get transactionCount {
@@ -53,7 +63,7 @@ class TransactionData extends ChangeNotifier {
   }
 
   double get balance {
-    return _trans.fold(0, (p, q) => (p + q.amount));
+    return getSumOfTransactions(_trans);
   }
 
   Set<String> previousPayees(
@@ -140,5 +150,9 @@ class TransactionData extends ChangeNotifier {
     return _trans.where((tx) {
       return tx.category == categoryName;
     }).toList();
+  }
+
+  double getSumOfTransactions(List<Transaction> transactions) {
+    return transactions.fold(0, (p, q) => (p + q.amount));
   }
 }

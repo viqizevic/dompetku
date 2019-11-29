@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class CategoryTile extends StatelessWidget {
   final String name;
+  final double sum;
   final bool isLastTile;
 
-  CategoryTile({this.name, this.isLastTile});
+  CategoryTile({this.name, this.sum, this.isLastTile});
 
   void selectCategory(BuildContext context) {
     Navigator.of(context).pushNamed(
@@ -28,6 +29,14 @@ class CategoryTile extends StatelessWidget {
                 color: Colors.blueAccent,
                 fontSize: 25,
                 fontWeight: FontWeight.w700,
+              ),
+            ),
+            trailing: Text(
+              '€${sum.abs().toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: sum < 0 ? Colors.red.shade800 : Colors.green,
               ),
             ),
           ),

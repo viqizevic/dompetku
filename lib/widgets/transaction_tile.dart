@@ -26,27 +26,58 @@ class TransactionTile extends StatelessWidget {
       children: <Widget>[
         ListTile(
           onTap: onTapCallback,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          title: Row(
             children: <Widget>[
-              FittedBox(
-                child: Text(
-                  payee,
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700,
+              Column(
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    radius: 24,
+                    child: Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: FittedBox(
+                        child: Text(
+                          payee.substring(0, 1),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  )
+                ],
               ),
-              Text(
-                category,
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
-                ),
-              )
+              SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FittedBox(
+                    child: Text(
+                      payee,
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    category,
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 12,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
           leading: Column(
@@ -55,7 +86,7 @@ class TransactionTile extends StatelessWidget {
               Text(
                 DateFormat.d().format(date),
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -65,7 +96,7 @@ class TransactionTile extends StatelessWidget {
           trailing: Text(
             '€${amount.abs().toStringAsFixed(2)}',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: FontWeight.w900,
               color: isAnExpense ? Colors.red.shade800 : Colors.green,
             ),
