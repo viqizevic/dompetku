@@ -16,7 +16,7 @@ class TransactionsScreen extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, TransactionFormScreen.addId);
+          Navigator.of(context).pushNamed(TransactionFormScreen.addId);
         },
       ),
       body: Column(

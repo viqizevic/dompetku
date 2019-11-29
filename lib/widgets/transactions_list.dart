@@ -24,8 +24,7 @@ class TransactionsList extends StatelessWidget {
             category: transaction.category,
             isAnExpense: transaction.isAnExpense,
             onTapCallback: () {
-              Navigator.push(
-                context,
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
                   return TransactionFormScreen(
                     transaction: transaction,
