@@ -1,3 +1,4 @@
+import 'package:dompetku/screens/category_transactions_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryTile extends StatelessWidget {
@@ -6,6 +7,13 @@ class CategoryTile extends StatelessWidget {
 
   CategoryTile({this.name, this.isLastTile});
 
+  void selectCategory(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      CategoryTransactionsScreen.id,
+      arguments: name,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,6 +21,7 @@ class CategoryTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: ListTile(
+            onTap: () => selectCategory(context),
             title: Text(
               name,
               style: TextStyle(

@@ -5,6 +5,7 @@ _ Show loading icon at beginning of the App start
 _ Add confirmation alert before removing transaction
 
 DONE
+_ Show transactions by categories
 _ Fill category for selected payee
 _ Give suggestion of categories
 _ Give suggestion of payees

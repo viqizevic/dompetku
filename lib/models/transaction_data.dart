@@ -135,4 +135,10 @@ class TransactionData extends ChangeNotifier {
     await dbHelper.deleteTransaction(transaction.id);
     notifyListeners();
   }
+
+  List<Transaction> getTransactionsByCategory(String categoryName) {
+    return _trans.where((tx) {
+      return tx.category == categoryName;
+    }).toList();
+  }
 }

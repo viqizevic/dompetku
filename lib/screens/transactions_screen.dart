@@ -64,7 +64,8 @@ class TransactionsScreen extends StatelessWidget {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   )),
-              child: TransactionsList(),
+              child: TransactionsList(
+                  Provider.of<TransactionData>(context).transactions),
             ),
           )
         ],
