@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:dompetku/models/database_helper.dart';
 import 'package:dompetku/models/transaction.dart';
+import 'package:dompetku/models/transactions_grouping_option.dart';
 import 'package:flutter/foundation.dart';
 
 class TransactionData extends ChangeNotifier {
@@ -42,20 +43,6 @@ class TransactionData extends ChangeNotifier {
     return UnmodifiableListView(_trans.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }));
-  }
-
-  List<String> get categories {
-    // Sort by Income or Expense
-    var cats = _trans
-        .map((tx) {
-          String prefix = tx.isAnExpense ? '2' : '1';
-          return prefix + tx.category;
-        })
-        .toSet()
-        .toList();
-    cats.sort();
-    cats = cats.map((category) => category.substring(1)).toSet().toList();
-    return cats;
   }
 
   int get transactionCount {
@@ -146,13 +133,29 @@ class TransactionData extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Transaction> getTransactionsByCategory(String categoryName) {
-    return _trans.where((tx) {
-      return tx.category == categoryName;
-    }).toList();
-  }
-
   double getSumOfTransactions(List<Transaction> transactions) {
     return transactions.fold(0, (p, q) => (p + q.amount));
+  }
+
+  List<String> getGroupNames(
+      TransactionsGroupingOption transactionsGroupingOption) {
+    // Sort by Income or Expense
+    var names = _trans
+        .map((tx) {
+          String prefix = tx.isAnExpense ? '2' : '1';
+          return prefix + tx.getGroupName(transactionsGroupingOption);
+        })
+        .toSet()
+        .toList();
+    names.sort();
+    names = names.map((name) => name.substring(1)).toSet().toList();
+    return names;
+  }
+
+  List<Transaction> getTransactionsByGroupName(
+      String groupName, TransactionsGroupingOption transactionsGroupingOption) {
+    return _trans.where((tx) {
+      return tx.getGroupName(transactionsGroupingOption) == groupName;
+    }).toList();
   }
 }

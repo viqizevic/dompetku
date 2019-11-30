@@ -1,0 +1,4 @@
+enum TransactionsGroupingOption {
+  ByPayee,
+  ByCategory,
+}

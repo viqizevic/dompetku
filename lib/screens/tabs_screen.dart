@@ -1,4 +1,5 @@
-import 'package:dompetku/screens/categories_screen.dart';
+import 'package:dompetku/models/transactions_grouping_option.dart';
+import 'package:dompetku/screens/groups_screen.dart';
 import 'package:dompetku/screens/transactions_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,12 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'Transactions',
     },
     {
-      'page': CategoriesScreen(),
+      'page': GroupsScreen(TransactionsGroupingOption.ByCategory),
       'title': 'Categories',
+    },
+    {
+      'page': GroupsScreen(TransactionsGroupingOption.ByPayee),
+      'title': 'Payees',
     },
   ];
   int _selectedPageIndex = 0;
@@ -51,6 +56,11 @@ class _TabsScreenState extends State<TabsScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.category),
             title: Text('Categories'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.people),
+            title: Text('Payees'),
           ),
         ],
       ),

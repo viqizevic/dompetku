@@ -3,8 +3,10 @@ TODO
 _ Show report by categories
 _ Show loading icon at beginning of the App start
 _ Add confirmation alert before removing transaction
+_ Add provider or consumer of each transaction
 
 DONE
+_ Show transactions by payee
 _ Add new font
 _ Show sum of each category
 _ Show transactions by category

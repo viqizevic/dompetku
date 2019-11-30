@@ -1,5 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
-import 'package:dompetku/screens/category_transactions_screen.dart';
+import 'package:dompetku/screens/grouped_transactions_screen.dart';
 import 'package:dompetku/screens/tabs_screen.dart';
 import 'package:dompetku/screens/transaction_form_screen.dart';
 import 'package:dompetku/screens/transactions_screen.dart';
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
           TabsScreen.id: (context) => TabsScreen(),
           TransactionsScreen.id: (context) => TransactionsScreen(),
           TransactionFormScreen.addId: (context) => TransactionFormScreen(),
-          CategoryTransactionsScreen.id: (context) =>
-              CategoryTransactionsScreen(),
+          GroupedTransactionsScreen.id: (context) =>
+              GroupedTransactionsScreen(),
         },
       ),
     );

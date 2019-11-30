@@ -1,17 +1,27 @@
-import 'package:dompetku/screens/category_transactions_screen.dart';
+import 'package:dompetku/models/transactions_grouping_option.dart';
+import 'package:dompetku/screens/grouped_transactions_screen.dart';
 import 'package:flutter/material.dart';
 
-class CategoryTile extends StatelessWidget {
+class GroupTile extends StatelessWidget {
   final String name;
   final double sum;
+  final TransactionsGroupingOption transactionsGroupingOption;
   final bool isLastTile;
 
-  CategoryTile({this.name, this.sum, this.isLastTile});
+  GroupTile({
+    this.name,
+    this.sum,
+    this.transactionsGroupingOption,
+    this.isLastTile,
+  });
 
   void selectCategory(BuildContext context) {
     Navigator.of(context).pushNamed(
-      CategoryTransactionsScreen.id,
-      arguments: name,
+      GroupedTransactionsScreen.id,
+      arguments: {
+        'name': name,
+        'grouping': transactionsGroupingOption,
+      },
     );
   }
 
