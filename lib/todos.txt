@@ -5,6 +5,7 @@ _ Show loading icon at beginning of the App start
 _ Add confirmation alert before removing transaction
 
 DONE
+_ Add new font
 _ Show sum of each category
 _ Show transactions by category
 _ Fill category for selected payee
