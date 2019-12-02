@@ -127,9 +127,9 @@ class TransactionData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTransaction({Transaction transaction}) async {
-    _trans.remove(transaction);
-    await dbHelper.deleteTransaction(transaction.id);
+  void deleteTransactionById(int transactionId) async {
+    _trans.removeWhere((tx) => tx.id == transactionId);
+    await dbHelper.deleteTransaction(transactionId);
     notifyListeners();
   }
 

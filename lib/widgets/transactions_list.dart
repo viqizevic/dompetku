@@ -18,6 +18,7 @@ class TransactionsList extends StatelessWidget {
         itemBuilder: (context, index) {
           final transaction = transactions[index];
           return TransactionTile(
+            id: transaction.id,
             payee: transaction.payee,
             amount: transaction.amount,
             date: transaction.date,

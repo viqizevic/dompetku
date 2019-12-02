@@ -2,7 +2,6 @@ import 'package:dompetku/models/transaction.dart';
 import 'package:dompetku/models/transaction_data.dart';
 import 'package:dompetku/widgets/suggestions_list.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +26,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
   bool _shouldUpdateTransaction = false;
   Set<String> _usedCategories = Set<String>();
   Set<String> _previousPayees = Set<String>();
+  TransactionData _transactionData;
 
   @override
   void initState() {
@@ -40,6 +40,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
       categoryController.text = widget.transaction.category;
       _selectedDate = widget.transaction.date;
     }
+    _transactionData = Provider.of<TransactionData>(context, listen: false);
   }
 
   void _toggleType() {
@@ -56,7 +57,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
 
   void _displayPreviousPayees(String input) {
     setState(() {
-      _previousPayees = Provider.of<TransactionData>(context).previousPayees(
+      _previousPayees = _transactionData.previousPayees(
         input: input,
         forExpense: _isAnExpense,
         payeeToBeExcluded: _shouldUpdateTransaction && 1 < input.length
@@ -68,8 +69,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
 
   void _displaySuggestedCategories(String input) {
     setState(() {
-      _usedCategories =
-          Provider.of<TransactionData>(context).suggestedCategories(
+      _usedCategories = _transactionData.suggestedCategories(
         input: input,
         forExpense: _isAnExpense,
         categoryToBeExcluded: _shouldUpdateTransaction && 1 < input.length
@@ -103,7 +103,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
         enteredCategory = widget.transaction.category;
       }
 
-      Provider.of<TransactionData>(context).updateTransaction(
+      _transactionData.updateTransaction(
         transactionId: widget.transaction.id,
         newPayee: enteredPayee,
         newAmount: enteredAmount,
@@ -111,7 +111,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
         newDate: _selectedDate,
       );
     } else {
-      Provider.of<TransactionData>(context).addTransaction(
+      _transactionData.addTransaction(
         payee: enteredPayee,
         amount: enteredAmount,
         category: enteredCategory,
@@ -210,9 +210,8 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                     _previousPayees.clear();
                     // Put in matching category
                     String matchingCategory =
-                        Provider.of<TransactionData>(context)
-                            .getMatchingCategory(
-                                payee: selectedPayee, forExpense: _isAnExpense);
+                        _transactionData.getMatchingCategory(
+                            payee: selectedPayee, forExpense: _isAnExpense);
                     if (null != matchingCategory &&
                         matchingCategory.isNotEmpty) {
                       categoryController.text = matchingCategory;
@@ -289,25 +288,6 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 ),
                 color: Colors.blueAccent,
                 onPressed: _submitData,
-              ),
-              Visibility(
-                child: FlatButton(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Icon(
-                      FontAwesomeIcons.trash,
-                      color: Colors.grey,
-                      size: 32,
-                    ),
-                  ),
-                  onPressed: () {
-                    Provider.of<TransactionData>(context).deleteTransaction(
-                      transaction: widget.transaction,
-                    );
-                    Navigator.pop(context);
-                  },
-                ),
-                visible: _shouldUpdateTransaction,
               ),
             ],
           ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:dompetku/models/transaction_data.dart';
 
 class TransactionTile extends StatelessWidget {
+  final int id;
   final String payee;
   final double amount;
   final DateTime date;
@@ -11,12 +14,13 @@ class TransactionTile extends StatelessWidget {
   final bool isLastTile;
 
   TransactionTile({
-    this.payee,
-    this.amount,
-    this.date,
-    this.category,
-    this.isAnExpense,
-    this.onTapCallback,
+    @required this.id,
+    @required this.payee,
+    @required this.amount,
+    @required this.date,
+    @required this.category,
+    @required this.isAnExpense,
+    @required this.onTapCallback,
     this.isLastTile,
   });
 
@@ -24,81 +28,103 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        ListTile(
-          onTap: onTapCallback,
-          title: Row(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    radius: 24,
-                    child: Padding(
-                      padding: const EdgeInsets.all(7.0),
-                      child: FittedBox(
-                        child: Text(
-                          payee.substring(0, 1),
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+        Dismissible(
+          key: ValueKey(id),
+          background: Container(
+            color: Theme.of(context).errorColor,
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 40,
+            ),
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 20),
+            margin: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 4,
+            ),
+          ),
+          direction: DismissDirection.endToStart,
+          onDismissed: (direction) {
+            Provider.of<TransactionData>(context, listen: false)
+                .deleteTransactionById(id);
+          },
+          child: ListTile(
+            onTap: onTapCallback,
+            title: Row(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      radius: 24,
+                      child: Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: FittedBox(
+                          child: Text(
+                            payee.substring(0, 1),
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  FittedBox(
-                    child: Text(
-                      payee,
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FittedBox(
+                      child: Text(
+                        payee,
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    category,
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                DateFormat.d().format(date),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                    Text(
+                      category,
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    )
+                  ],
                 ),
+              ],
+            ),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  DateFormat.d().format(date),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(DateFormat.MMM().format(date)),
+              ],
+            ),
+            trailing: Text(
+              '€${amount.abs().toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: isAnExpense ? Colors.red.shade800 : Colors.green,
               ),
-              Text(DateFormat.MMM().format(date)),
-            ],
-          ),
-          trailing: Text(
-            '€${amount.abs().toStringAsFixed(2)}',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              color: isAnExpense ? Colors.red.shade800 : Colors.green,
             ),
           ),
         ),
