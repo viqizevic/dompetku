@@ -1,4 +1,5 @@
 import 'package:dompetku/models/transaction.dart';
+import 'package:dompetku/models/transaction_data.dart';
 import 'package:dompetku/screens/grouped_transactions_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -6,12 +7,14 @@ class GroupTile extends StatelessWidget {
   final String name;
   final double sum;
   final TransactionsGroupingOption transactionsGroupingOption;
+  final TransactionsFilterOption transactionsFilterOption;
   final bool isLastTile;
 
   GroupTile({
     this.name,
     this.sum,
     this.transactionsGroupingOption,
+    this.transactionsFilterOption,
     this.isLastTile,
   });
 
@@ -21,6 +24,7 @@ class GroupTile extends StatelessWidget {
       arguments: {
         'name': name,
         'grouping': transactionsGroupingOption,
+        'filter': transactionsFilterOption,
       },
     );
   }

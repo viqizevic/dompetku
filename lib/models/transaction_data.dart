@@ -4,6 +4,12 @@ import 'package:dompetku/models/database_helper.dart';
 import 'package:dompetku/models/transaction.dart';
 import 'package:flutter/foundation.dart';
 
+enum TransactionsFilterOption {
+  ThisMonth,
+  LastMonth,
+  All,
+}
+
 class TransactionData extends ChangeNotifier {
   List<Transaction> _trans = [];
   int newIdCounter = 1;
@@ -136,10 +142,36 @@ class TransactionData extends ChangeNotifier {
     return transactions.fold(0, (p, q) => (p + q.amount));
   }
 
+  List<Transaction> getTransactionsByFilter(
+      TransactionsFilterOption transactionsFilterOption) {
+    DateTime today = DateTime.now();
+    switch (transactionsFilterOption) {
+      case TransactionsFilterOption.ThisMonth:
+        return _trans
+            .where((tx) =>
+                (tx.date.year == today.year && tx.date.month == today.month))
+            .toList();
+        break;
+      case TransactionsFilterOption.LastMonth:
+        DateTime lastMonth = DateTime(today.year, today.month, 0);
+        return _trans
+            .where((tx) => (tx.date.year == lastMonth.year &&
+                tx.date.month == lastMonth.month))
+            .toList();
+        break;
+      default:
+        return transactions;
+    }
+  }
+
   List<String> getGroupNames(
-      TransactionsGroupingOption transactionsGroupingOption) {
+    TransactionsGroupingOption transactionsGroupingOption, {
+    TransactionsFilterOption transactionsFilterOption,
+  }) {
     // Sort by Income or Expense
-    var names = _trans
+    List<Transaction> result =
+        getTransactionsByFilter(transactionsFilterOption);
+    var names = result
         .map((tx) {
           String prefix = tx.isAnExpense ? '2' : '1';
           return prefix + tx.getGroupName(transactionsGroupingOption);
@@ -152,8 +184,13 @@ class TransactionData extends ChangeNotifier {
   }
 
   List<Transaction> getTransactionsByGroupName(
-      String groupName, TransactionsGroupingOption transactionsGroupingOption) {
-    return _trans.where((tx) {
+    String groupName,
+    TransactionsGroupingOption transactionsGroupingOption, {
+    TransactionsFilterOption transactionsFilterOption,
+  }) {
+    List<Transaction> result =
+        getTransactionsByFilter(transactionsFilterOption);
+    return result.where((tx) {
       return tx.getGroupName(transactionsGroupingOption) == groupName;
     }).toList();
   }
