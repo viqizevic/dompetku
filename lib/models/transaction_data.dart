@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:dompetku/models/database_helper.dart';
 import 'package:dompetku/models/transaction.dart';
-import 'package:dompetku/models/transactions_grouping_option.dart';
 import 'package:flutter/foundation.dart';
 
 class TransactionData extends ChangeNotifier {

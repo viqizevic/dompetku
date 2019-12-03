@@ -1,4 +1,4 @@
-import 'package:dompetku/models/transactions_grouping_option.dart';
+import 'package:dompetku/models/transaction.dart';
 import 'package:dompetku/screens/groups_screen.dart';
 import 'package:dompetku/screens/transactions_screen.dart';
 import 'package:flutter/material.dart';

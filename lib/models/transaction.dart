@@ -1,4 +1,7 @@
-import 'package:dompetku/models/transactions_grouping_option.dart';
+enum TransactionsGroupingOption {
+  ByPayee,
+  ByCategory,
+}
 
 class Transaction {
   final int id;

@@ -1,5 +1,5 @@
 import 'package:dompetku/models/transaction_data.dart';
-import 'package:dompetku/models/transactions_grouping_option.dart';
+import 'package:dompetku/models/transaction.dart';
 import 'package:dompetku/widgets/group_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

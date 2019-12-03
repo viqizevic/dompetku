@@ -34,20 +34,23 @@ class TransactionsScreen extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  '€${Provider.of<TransactionData>(context).balance.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
+                Consumer<TransactionData>(
+                  builder: (ctx, transactionData, child) => Text(
+                    '€${transactionData.balance.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Chart(
-                  recentTransactions:
-                      Provider.of<TransactionData>(context).recentTransactions,
+                Consumer<TransactionData>(
+                  builder: (ctx, transactionData, child) => Chart(
+                    recentTransactions: transactionData.recentTransactions,
+                  ),
                 ),
               ],
             ),
@@ -64,8 +67,10 @@ class TransactionsScreen extends StatelessWidget {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   )),
-              child: TransactionsList(
-                  Provider.of<TransactionData>(context).transactions),
+              child: Consumer<TransactionData>(
+                builder: (ctx, transactionData, child) =>
+                    TransactionsList(transactionData.transactions),
+              ),
             ),
           )
         ],
