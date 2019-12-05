@@ -45,6 +45,29 @@ class TransactionTile extends StatelessWidget {
             ),
           ),
           direction: DismissDirection.endToStart,
+          confirmDismiss: (direction) {
+            return showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text('Are you sure?'),
+                content: Text('Do you want to remove this transaction?'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('No'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop(false);
+                    },
+                  ),
+                  FlatButton(
+                    child: Text('Yes'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop(true);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
           onDismissed: (direction) {
             Provider.of<TransactionData>(context, listen: false)
                 .deleteTransactionById(id);
