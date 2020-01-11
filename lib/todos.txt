@@ -2,10 +2,13 @@
 TODO
 _ Show report by categories
 _ Show loading icon at beginning of the App start
-_ Add confirmation alert before removing transaction
-_ Add consumer of each transaction
+_ User can choose sorting of categories list
+_ User can select between accounts
+_ User can add note
 
 DONE
+_ Add confirmation alert before removing transaction
+_ User can choose different time filters
 _ Show transactions by payee
 _ Add new font
 _ Show sum of each category

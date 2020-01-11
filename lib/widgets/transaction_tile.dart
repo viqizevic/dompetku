@@ -76,55 +76,60 @@ class TransactionTile extends StatelessWidget {
             onTap: onTapCallback,
             title: Row(
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      radius: 24,
-                      child: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: FittedBox(
-                          child: Text(
-                            payee.substring(0, 1),
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                Container(
+                  width: 40.0,
+                  child: Column(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        radius: 24,
+                        child: Padding(
+                          padding: const EdgeInsets.all(7.0),
+                          child: FittedBox(
+                            child: Text(
+                              payee.substring(0, 1),
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    )
-                  ],
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   width: 15,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    FittedBox(
-                      child: Text(
-                        payee,
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      FittedBox(
+                        child: Text(
+                          payee,
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      category,
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 12,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    )
-                  ],
+                      Text(
+                        category,
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
