@@ -68,8 +68,17 @@ class TransactionsScreen extends StatelessWidget {
                     topLeft: Radius.circular(20),
                   )),
               child: Consumer<TransactionData>(
-                builder: (ctx, transactionData, child) =>
-                    TransactionsList(transactionData.transactions),
+                builder: (ctx, transactionData, child) {
+                  if (!transactionData.isLoading) {
+                    return TransactionsList(transactionData.transactions);
+                  } else {
+                    return Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
           )

@@ -1,7 +1,8 @@
 
 TODO
-_ Show report by categories
 _ Show loading icon at beginning of the App start
+_ Fix loading state not updating after transactions loaded
+_ Show report by categories
 _ User can choose sorting of categories list
 _ User can select between accounts
 _ User can add note

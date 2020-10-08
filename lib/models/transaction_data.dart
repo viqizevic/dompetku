@@ -14,28 +14,37 @@ class TransactionData extends ChangeNotifier {
   List<Transaction> _trans = [];
   int newIdCounter = 1;
   DatabaseHelper dbHelper;
+  bool isLoading = false;
 
   TransactionData() {
     dbHelper = DatabaseHelper.instance;
-    readData();
+    loadData();
   }
 
-  void readData() async {
-    List<Transaction> list = await dbHelper.queryAllTransactions();
-    if (null == list || list.isEmpty) {
-      addTransaction(
-          payee: "Bank 1",
-          amount: 50,
-          category: "Cash",
-          date: DateTime.now().subtract(Duration(days: 1)));
-      addTransaction(
-          payee: "Restaurant 2",
-          amount: -10,
-          category: "Eating Out",
-          date: DateTime.now());
-    } else {
-      _trans.addAll(list);
-      newIdCounter = list.fold(0, (p, q) => (max<int>(p, q.id))) + 1;
+  void loadData() async {
+    List<Transaction> list;
+    try {
+      isLoading = true;
+      list = await dbHelper.queryAllTransactions();
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading = false;
+      if (null == list || list.isEmpty) {
+        addTransaction(
+            payee: "Bank 1",
+            amount: 50,
+            category: "Cash",
+            date: DateTime.now().subtract(Duration(days: 1)));
+        addTransaction(
+            payee: "Restaurant 2",
+            amount: -10,
+            category: "Eating Out",
+            date: DateTime.now());
+      } else {
+        _trans.addAll(list);
+        newIdCounter = list.fold(0, (p, q) => (max<int>(p, q.id))) + 1;
+      }
     }
   }
 
