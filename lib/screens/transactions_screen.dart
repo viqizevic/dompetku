@@ -35,14 +35,19 @@ class TransactionsScreen extends StatelessWidget {
                   ),
                 ),
                 Consumer<TransactionData>(
-                  builder: (ctx, transactionData, child) => Text(
-                    '€${transactionData.balance.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  builder: (ctx, transactionData, child) {
+                    String balance = !transactionData.isLoading
+                        ? '€${transactionData.balance.toStringAsFixed(2)}'
+                        : '...';
+                    return Text(
+                      balance,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 10,

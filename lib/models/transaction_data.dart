@@ -26,6 +26,7 @@ class TransactionData extends ChangeNotifier {
     try {
       isLoading = true;
       list = await dbHelper.queryAllTransactions();
+      // await Future.delayed(Duration(seconds: 3));
     } catch (e) {
       print(e);
     } finally {
@@ -45,6 +46,7 @@ class TransactionData extends ChangeNotifier {
         _trans.addAll(list);
         newIdCounter = list.fold(0, (p, q) => (max<int>(p, q.id))) + 1;
       }
+      notifyListeners();
     }
   }
 
